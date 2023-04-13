@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\MainController;
+use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\User\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,8 +16,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/admin/users/login', [LoginController::class, 'login']);
+Route::get('/admin/users/login', [LoginController::class, 'login'])->name('login');
 
 Route::post('/admin/users/login/store', [LoginController::class, 'store']);
 
-Route::get('/admin/main', [MainController::class, 'index'])->name('admin');
+Route::middleware(['auth'])->group(function () {
+  // Admin
+  Route::prefix('admin')->group(function () {
+    Route::get('/', [MainController::class, 'index'])->name('admin');
+    Route::get('/main', [MainController::class, 'index']);
+
+    // Menus
+    Route::prefix('menus')->group(function () {
+      Route::get('/add', [MenuController::class, 'create']);
+      Route::post('/add', [MenuController::class, 'store']);
+      Route::get('/list', [MenuController::class, 'getList']);
+    });
+  });
+});

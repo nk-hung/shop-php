@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
-   public function index()
-   {
-     echo 'Main Admin';
-   }
+  public function index()
+  {
+    return view('admin.home', [
+      "title" => 'Quản trị hệ thống Admin'
+    ]);
+  }
 }
