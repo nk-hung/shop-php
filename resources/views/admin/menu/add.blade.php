@@ -16,6 +16,9 @@
             <div class="col-sm-10">
                 <select name="parent_id" class="form-control">
                     <option value="0">--Danh Mục Cha--</option>
+                    @foreach($menus as $menu)
+                    <option value="{{ $menu->id }}">{{$menu->name}}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
