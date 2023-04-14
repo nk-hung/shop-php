@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Menu\CreateFormRequest;
 use App\Models\Menu;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
@@ -55,5 +57,21 @@ class MenuController extends Controller
     public function getAllMenu()
     {
         return Menu::orderBy('id')->paginate(20);
+    }
+
+    public function remove(Request $request): JsonResponse
+    {
+        $id = (int) $request->id;
+        $menu = Menu::where('id', $id);
+        if ($menu) {
+            $result = Menu::where('id', $id)->orWhere('parent_id', $id)->delete();
+            return response()->json([
+                "error" => false,
+                "message" => "Xóa thành công",
+            ]);
+        }
+        return response()->json([
+            "error" => true
+        ]);
     }
 }

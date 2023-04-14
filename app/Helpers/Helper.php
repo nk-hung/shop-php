@@ -28,7 +28,7 @@ if (!function_exists('createMenu1')) {
                     <p class="pt-8">Bạn có thực sự muốn xóa bản ghi này?</p>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" >Xác nhận</button>
+                    <button type="button" class="btn btn-primary" onClick="ajaxRemove(' . $menu->id . ', \'/admin/menus/destroy\')" >Xác nhận</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
                   </div>
                 </div>
