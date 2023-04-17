@@ -19,4 +19,6 @@ class Menu extends Model
         "active",
         "slug"
     ];
+
+    protected $guard = [];
 }

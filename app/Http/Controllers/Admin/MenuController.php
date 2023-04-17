@@ -74,4 +74,28 @@ class MenuController extends Controller
             "error" => true
         ]);
     }
+
+    public function show(Menu $menu)
+    {
+        // echo "<pre/>";
+        // print_r($menu);
+        // die();
+        return view('admin.menu.edit', [
+            "title" => "Cập nhật dữ liệu danh mục ID: " . $menu->id . ' - ' . $menu->name,
+            "menu" => $menu,
+            "menus" => $this->getParent()
+        ]);
+    }
+
+    public function update(CreateFormRequest $request, Menu $menu): RedirectResponse
+    {
+        $menu->name = $request->name;
+        $menu->parent_id = $request->parent_id;
+        $menu->description = $request->description;
+        $menu->content = $request->content;
+        $menu->active = $request->active;
+        $menu->save();
+        Session::flash('success', "Update Success!");
+        return redirect("/admin/menus/list");
+    }
 }
